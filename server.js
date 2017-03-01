@@ -57,7 +57,25 @@ app.get("/routes", function (req, res) {
         }
     });
 });
-var port = 8080;
+app.get("/routes/:id", function (req, res) {
+    var objectId = req.params.id;
+    routeSchema_1.Route.find({ "_id": objectId }, function (err, result) {
+        if (!err) {
+            res.json({
+                status: 200,
+                route: result
+            });
+        }
+        else {
+            console.log(err);
+            res.json({
+                status: 500,
+                message: "Error getting route or route not found"
+            });
+        }
+    });
+});
+var port = 80;
 app.listen(port, function () {
     console.log("Server is listening to port: " + port);
 });

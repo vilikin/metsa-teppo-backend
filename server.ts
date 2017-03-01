@@ -61,7 +61,26 @@ app.get("/routes", (req, res) => {
     })
 });
 
-let port = 8080;
+app.get("/routes/:id", (req, res) => {
+    let objectId:string = req.params.id;
+    Route.find({"_id":objectId}, (err, result) => {
+        if (!err) {
+            res.json({
+                status: 200,
+                route: result
+            })
+        } else {
+            console.log(err);
+            res.json({
+                status: 500,
+                message: "Error getting route or route not found"
+            })
+        }
+    })
+});
+
+
+let port = 80;
 app.listen(port, () => {
     console.log("Server is listening to port: " + port);
 });
